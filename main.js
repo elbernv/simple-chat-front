@@ -1,5 +1,7 @@
-const url = "http://192.168.2.229:3001"
-const socket = io("http://192.168.2.229:5000")
+const url = "http://elbernv.site:3001"
+const socket = io("http://elbernv.site:5000")
+const messageInput = document.getElementById('message');
+let profile = null;
 
 const checkIfUserHasProfile = async () => {
   const response = await axios.get(`${url}/check-if-user-has-profile`);
@@ -26,13 +28,78 @@ const createActiveUserElement = (activeUser) => {
   contacts.appendChild(li)
 }
 
+const messageSentByMe = (sendBy) => {
+  return sendBy === profile.name
+}
+
+const createMessageSentByMeElement = (messageBody) => {
+  const msgCardBody = document.getElementById('msg-card-body');
+  const div = document.createElement('div');
+  div.classList.add('d-flex', 'justify-content-start', 'mb-4');
+
+  div.innerHTML = `
+    <div class="img_cont_msg">
+      <img src="${messageBody.image}" class="rounded-circle user_img_msg">
+    </div>
+    <div class="msg_cotainer">
+      ${messageBody.message}
+      <span class="msg_time">9:12 AM, Today</span>
+    </div>
+  `
+  msgCardBody.appendChild(div);
+  console.log(msgCardBody.scrollHeight);
+  console.log(msgCardBody.scrollTop);
+  if(
+      msgCardBody.scrollHeight - msgCardBody.scrollTop === 404 ||
+      msgCardBody.scrollTop === 0
+    ){
+    msgCardBody.scrollTop = msgCardBody.scrollHeight;
+  }
+}
+
+const createMessageSentByAnother = (messageBody) => {
+  const msgCardBody = document.getElementById('msg-card-body');
+  const div = document.createElement('div');
+  div.classList.add('d-flex', 'justify-content-end', 'mb-4');
+
+  div.innerHTML = `
+    <div class="msg_cotainer_send">
+      ${messageBody.message}
+      <span class="msg_time_send">9:10 AM, Today</span>
+    </div>
+    <div class="img_cont_msg">
+      <img src="${messageBody.image}" class="rounded-circle user_img_msg">
+    </div>
+  `
+  msgCardBody.appendChild(div);
+  if(
+      msgCardBody.scrollHeight - msgCardBody.scrollTop === 404 ||
+      msgCardBody.scrollTop === 0
+    ){
+    msgCardBody.scrollTop = msgCardBody.scrollHeight;
+  }
+}
+
+const sendMessage = () => {
+  if(messageInput.value === ""){
+    return;
+  }
+
+  socket.emit('send-message', {message: messageInput.value, sendBy: profile.name});
+
+  messageInput.value = "";
+}
+
 checkIfUserHasProfile()
   .then(async (response)=>{
+
     if(response.data === false){
       window.location.href = 'registro.html'
     }
 
-    socket.emit("get-active-users", {data: ''})
+    profile = response.data;
+
+    socket.emit("get-active-users", '');
 
     socket.on('get-active-users', (data)=>{
       const contacts = document.getElementById('contacts');
@@ -41,39 +108,26 @@ checkIfUserHasProfile()
       for(const activeUser of data){
         createActiveUserElement(activeUser);
       }
+    });
+
+    socket.on('receive-message', (data)=>{
+      if(messageSentByMe(data.sendBy)){
+        createMessageSentByMeElement(data);
+        return;
+      }
+
+      createMessageSentByAnother(data);
+      return;
     })
+
   })
   .catch((error)=>{
     console.log(error)
   })
 
-const message = document.getElementById('message');
-const messages = document.getElementById('messages');
-
-const handleSubmitNewMessages = () => {
-  socket.emit('message', { data : message.value });
-}
-
-socket.on('message', ({data})=>{
-    handleNewMessage(data);
-})
-
-const handleNewMessage = (message)=>{
-  messages.appendChild(buildNewMessage(message))
-}
-
-const buildNewMessage = (message) => {
-  const div = document.createElement('div');
-  div.innerHTML = `
-    <div class="card" style="width: 18rem;">
-      <img class="card-img-top" src="https://estnn.com/wp-content/uploads/2022/06/sg-fiddle-e1655985495691.jpg" alt="Card image cap" width="300" heigth="200">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p>
-          ${message}
-        </p>
-      </div>
-    </div>
-  `;
-  return div;
-}
+  messageInput.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    sendMessage();
+  }
+});
