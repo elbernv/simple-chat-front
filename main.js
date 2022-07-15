@@ -1,10 +1,11 @@
-const url = "http://elbernv.site:3001"
-const socket = io("http://elbernv.site:5000")
+const url = "http://192.168.2.229:3001"
+const socket = io("http://192.168.2.229:5000")
 const messageInput = document.getElementById('message');
-let profile = null;
+let profile = { name : window.location.search.slice(1, window.location.search.length) };
+
 
 const checkIfUserHasProfile = async () => {
-  const response = await axios.get(`${url}/check-if-user-has-profile`);
+  const response = await axios.get(`${url}/check-if-user-has-profile?name=${profile?.name || 'notprofile'}`);
   
   return response;
 }
@@ -92,7 +93,7 @@ const sendMessage = () => {
 
 checkIfUserHasProfile()
   .then(async (response)=>{
-
+    console.log(response)
     if(response.data === false){
       window.location.href = 'registro.html'
     }

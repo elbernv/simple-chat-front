@@ -19,10 +19,10 @@ const registrar = async ()=>{
 
   console.log(formdata);
   try {
-    let response = await axios.post("http://elbernv.site:3001/create-profile", formdata)  
+    let response = await axios.post(`http://192.168.2.229:3001/create-profile`, formdata)  
 
     if(response.data.message === "ok bro"){
-      window.location.href = '/'
+      window.location.href = `/?${encodeURIComponent(tuname)}`
     }
   } catch (error) {
     console.log(error);
