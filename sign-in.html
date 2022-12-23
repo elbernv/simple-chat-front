@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/sign-in.css" />
+    <script defer src="./js/all.min.js"></script>
+    <title>Sign In</title>
+  </head>
+  <body>
+    <div
+      class="container-login d-flex align-items-center justify-content-center"
+      id="main-container"
+    >
+      <div class="container-form d-flex align-items-center flex-column">
+        <div
+          class="title d-flex align-items-center justify-content-center my-5"
+        >
+          <h1>Sign In</h1>
+        </div>
+
+        <div class="form d-flex align-items-center justify-content-center">
+          <div class="row">
+            <div class="col-12">
+              <label for="email-or-username" class="form-label"
+                >Email or Username</label
+              >
+              <input
+                type="email"
+                onkeypress="enterKeyPress(event)"
+                class="form-control"
+                id="email-or-username"
+              />
+            </div>
+            <div class="col-12 mt-3">
+              <label for="password" class="form-label">Password</label>
+              <input
+                type="password"
+                onkeypress="enterKeyPress(event)"
+                class="form-control"
+                id="password"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row button-container">
+          <button
+            class="btn btn-primary mt-5"
+            id="login-btn"
+            onclick="login(event)"
+          >
+            Sign In
+          </button>
+          <span class="text-center mt-2"
+            >Not a member? <a href="sign-up.html">Sign up now</a></span
+          >
+        </div>
+      </div>
+    </div>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/axios.min.js"></script>
+    <script src="./js/sign-in.js"></script>
+  </body>
+</html>
