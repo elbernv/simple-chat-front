@@ -132,11 +132,12 @@ html {
 }
 
 .user_info ~ svg {
-  width: 70px;
+  width: 50px;
   height: 33px;
   margin: auto;
   margin-right: 0;
   color: white;
+  cursor: pointer;
 }
 
 .user_info span {
