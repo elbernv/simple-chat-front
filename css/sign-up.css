@@ -98,3 +98,15 @@ body {
   font-size: 7px;
   position: absolute;
 }
+
+@media all and (min-width: 360px) and (max-width: 768px) {
+  .signup-form form {
+    width: 90%;
+  }
+}
+
+@media all and (min-width: 768px) and (max-width: 1024px) {
+  .signup-form form {
+    width: 35%;
+  }
+}
