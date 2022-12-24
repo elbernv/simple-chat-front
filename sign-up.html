@@ -10,7 +10,7 @@
     <title>Sign Up</title>
   </head>
   <body>
-    <div class="signup-form">
+    <div class="signup-form" id="signup-form">
       <form class="form" autocomplete="off">
         <h2>Sign Up</h2>
         <p>Please fill in this form to create an account!</p>
@@ -25,10 +25,11 @@
             <input
               type="text"
               class="form-control"
-              name="username"
-              placeholder="Username"
-              required="required"
+              name="name"
+              placeholder="Name"
+              id="name"
             />
+            <div class="invalid-feedback" id="name-invalid-feedback"></div>
           </div>
         </div>
         <div class="form-group">
@@ -42,9 +43,10 @@
               type="email"
               class="form-control"
               name="email"
+              id="email"
               placeholder="Email Address"
-              required="required"
             />
+            <div class="invalid-feedback" id="email-invalid-feedback"></div>
           </div>
         </div>
         <div class="form-group">
@@ -55,12 +57,16 @@
               </span>
             </div>
             <input
-              type="text"
+              type="password"
               class="form-control"
               name="password"
+              id="password"
               placeholder="Password"
-              required="required"
+              onkeyup="clearConfirmPassword(event)"
             />
+            <div class="invalid-feedback">
+              the password must be longer than 8 characters
+            </div>
           </div>
         </div>
         <div class="form-group">
@@ -72,23 +78,27 @@
               </span>
             </div>
             <input
-              type="text"
+              type="password"
               class="form-control"
+              id="confirm-password"
               name="confirm_password"
               placeholder="Confirm Password"
-              required="required"
+              onkeyup="validateConfirmPassword(event)"
             />
+            <div class="invalid-feedback">passwords do not match</div>
           </div>
         </div>
         <div class="form-group">
           <label class="form-check-label"
-            ><input type="checkbox" required="required" /> I accept the
+            ><input type="checkbox" /> I accept the
             <a href="#">Terms of Use</a> &amp;
             <a href="#">Privacy Policy</a></label
           >
         </div>
         <div class="form-group d-grid gap-2">
-          <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+          <button onclick="signUp(event)" class="btn btn-primary btn-lg">
+            Sign Up
+          </button>
         </div>
       </form>
       <div class="text-center">

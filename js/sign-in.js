@@ -3,6 +3,8 @@ axios.defaults.validateStatus = function (status) {
   return status >= 200 && status < 600;
 };
 
+const alertsTimeOuts = [];
+
 function closeAlert(alertId) {
   const bsAlert = new bootstrap.Alert(`#${alertId}`);
 
@@ -12,13 +14,13 @@ function closeAlert(alertId) {
 }
 
 function showAlert(type) {
-  if (document.getElementById('warning-alert')) return;
+  if (document.getElementById('alert')) return;
 
   const mainContainer = document.getElementById('main-container');
 
   mainContainer.innerHTML += `
-  <div class="text-center alert alert-${type} alert-dismissible fade show" role="alert" id="warning-alert">
-    <strong>Nombre de usuario o contraseña incorrectos.<strong/>
+  <div class="text-center alert alert-${type} alert-dismissible fade show" role="alert" id="alert">
+    <strong>Incorrect username or password.<strong/>
     <button
       type="button"
       class="btn-close"
@@ -28,9 +30,15 @@ function showAlert(type) {
   </div>
   `;
 
-  setTimeout(() => {
-    closeAlert('warning-alert');
-  }, '4000');
+  for (const timeout of alertsTimeOuts) {
+    clearTimeout(timeout);
+  }
+
+  alertsTimeOuts.push(
+    setTimeout(() => {
+      closeAlert('alert');
+    }, '4000'),
+  );
 }
 
 async function login(event) {
@@ -42,8 +50,6 @@ async function login(event) {
   };
 
   const response = await axios.post('/auth/login', payload);
-
-  console.log(response);
 
   if (response.status === 401) {
     emailOrusername.classList.add('is-invalid');
