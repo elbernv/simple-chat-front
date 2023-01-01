@@ -59,7 +59,8 @@ async function login(event) {
     return;
   }
 
-  sessionStorage.setItem('access_token', response.data.access_token);
+  localStorage.setItem('access_token', response.data.access_token);
+  localStorage.setItem('refresh_token', response.data.refresh_token);
   window.location.href = '/index.html';
 }
 

@@ -132,15 +132,14 @@ const signUp = async (event) => {
 
   const response = await axios.post('/customers', payload);
 
-  console.log(response);
-
   if (response.status === 400) {
     showFieldsWithErrors(response.data.message);
     showAlert('danger');
     return;
   }
 
-  sessionStorage.setItem('access_token', response.data.access_token);
+  localStorage.setItem('access_token', response.data.access_token);
+  localStorage.setItem('refresh_token', response.data.refresh_token);
   window.location.href = '/index.html';
 };
 
