@@ -7,6 +7,13 @@ html {
   background-size: cover;
 }
 
+.modal-content {
+  background-image: url('../img/bg-login.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+}
+
 .chat {
   margin-top: auto;
   margin-bottom: auto;
@@ -229,6 +236,46 @@ html {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.2);
 }
+
+.col-md-10 input {
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 0 !important;
+  color: white !important;
+}
+
+input:disabled {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  border: 0 !important;
+  color: white !important;
+}
+
+.col-md-10 input:focus {
+  outline: 0px !important;
+  box-shadow: none;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: white;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.modal-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.modal-footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.4);
+}
+
 @media (max-width: 576px) {
   .contacts_card {
     margin-bottom: 15px !important;

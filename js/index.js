@@ -1,15 +1,14 @@
-const accessToken = localStorage.getItem('access_token');
 axios.defaults.baseURL = 'http://localhost:7015';
 axios.defaults.validateStatus = function (status) {
   return status >= 200 && status < 600;
 };
-axios.defaults.headers = {
-  Authorization: `Bearer ${accessToken}`,
-};
 
 const signOut = async () => {
   try {
-    const response = await axios.delete('/auth/logout');
+    const headers = {
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    };
+    const response = await axios.delete('/auth/logout', { headers });
   } catch (error) {
     console.log(error);
   } finally {
@@ -37,10 +36,15 @@ const refreshSession = async () => {
       await refreshSession();
     }, response.data.expirationInSeconds * 1000);
   }
+
+  return true;
 };
 
 const validateSession = async () => {
-  const response = await axios.get('/auth/validate');
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+  };
+  const response = await axios.get('/auth/validate', { headers });
 
   if (response.status === 401) {
     return await refreshSession();
@@ -55,8 +59,18 @@ const validateSession = async () => {
   return;
 };
 
+const configureDropDownMenu = async () => {
+  const dropDownMenuElement = document.getElementById('a');
+  const dropDownMenu = new bootstrap.Dropdown(dropDownMenuElement, {
+    autoClose: true,
+  });
+};
+
 const main = async () => {
-  validateSession();
+  await validateSession();
+  const mainContainer = document.getElementById('main-container');
+
+  mainContainer.addEventListener('click', configureDropDownMenu);
 };
 
 main();

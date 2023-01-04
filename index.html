@@ -10,7 +10,77 @@
     <title>Simple Chat</title>
   </head>
   <body>
-    <div class="container-fluid h-100">
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="my-profile-modal"
+      tabindex="-1"
+      aria-labelledby="my-profile-modal-label"
+      aria-hidden="true"
+      data-bs-backdrop="static"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" id="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="my-profile-modal-label">
+              Modal title
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form
+              class="form row g-3 needs-validation d-flex justify-content-center"
+              novalidate
+              autocomplete="off"
+            >
+              <div class="col-md-10">
+                <label for="first-name" class="form-label">First name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="first-name"
+                  name="first-name"
+                  required
+                />
+                <div class="valid-feedback">Looks good!</div>
+              </div>
+              <div class="col-md-10">
+                <label for="last-name" class="form-label">Last name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="last-name"
+                  required
+                />
+                <div class="valid-feedback">Looks good!</div>
+              </div>
+              <div class="col-md-10">
+                <label for="email" class="form-label">Email</label>
+                <input type="text" class="form-control" id="email" disabled />
+                <div class="valid-feedback">Looks good!</div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid h-100" id="main-container">
       <div class="row justify-content-center h-100">
         <div class="col-md-4 col-xl-3 chat">
           <div class="card mb-sm-3 mb-md-0 contacts_card">
@@ -31,10 +101,19 @@
                   class="fa-solid fa-gear dropdown-toggle"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
+                  id="a"
                 ></i>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li>
+                    <button
+                      class="dropdown-item"
+                      data-bs-toggle="modal"
+                      data-bs-target="#my-profile-modal"
+                      onclick="getMyinfo(event)"
+                    >
+                      My Profile
+                    </button>
+                  </li>
                   <li>
                     <a class="dropdown-item" href="#" onclick="signOut(event)"
                       >Sign Out</a
@@ -282,5 +361,6 @@
     <script src="./js/bootstrap.bundle.min.js"></script>
     <script src="./js/axios.min.js"></script>
     <script src="./js/index.js"></script>
+    <script src="./js/my-profile.js"></script>
   </body>
 </html>
