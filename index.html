@@ -23,7 +23,7 @@
         <div class="modal-content" id="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="my-profile-modal-label">
-              Modal title
+              My Profile
             </h1>
             <button
               type="button"
@@ -45,9 +45,10 @@
                   class="form-control"
                   id="first-name"
                   name="first-name"
+                  onkeypress="enterKeyPress(event)"
                   required
                 />
-                <div class="valid-feedback">Looks good!</div>
+                <div id="name-invalid-feedback" class="invalid-feedback"></div>
               </div>
               <div class="col-md-10">
                 <label for="last-name" class="form-label">Last name</label>
@@ -55,14 +56,31 @@
                   type="text"
                   class="form-control"
                   id="last-name"
+                  onkeypress="enterKeyPress(event)"
                   required
                 />
-                <div class="valid-feedback">Looks good!</div>
+                <div
+                  id="last-name-invalid-feedback"
+                  class="invalid-feedback"
+                ></div>
+              </div>
+              <div class="col-md-10">
+                <label for="password" class="form-label">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  onkeypress="enterKeyPress(event)"
+                  required
+                />
+                <div
+                  id="password-invalid-feedback"
+                  class="invalid-feedback"
+                ></div>
               </div>
               <div class="col-md-10">
                 <label for="email" class="form-label">Email</label>
                 <input type="text" class="form-control" id="email" disabled />
-                <div class="valid-feedback">Looks good!</div>
               </div>
             </form>
           </div>
@@ -74,7 +92,14 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button
+              type="button"
+              onclick="updateMyProfile(event)"
+              class="btn btn-success"
+              id="update-me-button"
+            >
+              Save changes
+            </button>
           </div>
         </div>
       </div>

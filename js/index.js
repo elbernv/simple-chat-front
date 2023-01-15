@@ -1,4 +1,4 @@
-axios.defaults.baseURL = 'http://localhost:7015';
+axios.defaults.baseURL = 'http://192.168.1.109:7015';
 axios.defaults.validateStatus = function (status) {
   return status >= 200 && status < 600;
 };
@@ -13,6 +13,7 @@ const signOut = async () => {
     console.log(error);
   } finally {
     localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
     window.location.href = '/sign-in.html';
   }
 };
@@ -26,18 +27,18 @@ const refreshSession = async () => {
     refresh_token: refreshToken,
   });
 
-  if (response.status === 401) {
+  if (response.status !== 200) {
     window.location.href = '/sign-in.html';
-  } else if (response.status === 200) {
-    localStorage.setItem('access_token', response.data.access_token);
-    localStorage.setItem('refresh_token', response.data.refresh_token);
-
-    setTimeout(async () => {
-      await refreshSession();
-    }, response.data.expirationInSeconds * 1000);
   }
 
-  return true;
+  localStorage.setItem('access_token', response.data.access_token);
+  localStorage.setItem('refresh_token', response.data.refresh_token);
+
+  setTimeout(async () => {
+    await refreshSession();
+  }, response.data.expirationInSeconds * 1000);
+
+  return;
 };
 
 const validateSession = async () => {

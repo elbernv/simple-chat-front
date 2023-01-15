@@ -276,8 +276,25 @@ select:-webkit-autofill:focus {
   border-top: 1px solid rgba(0, 0, 0, 0.4);
 }
 
+.invalid-feedback {
+  font-weight: 700;
+  color: red;
+}
+
+#alert {
+  top: 4px;
+  position: absolute;
+  right: 40%;
+  left: 40%;
+}
+
 @media (max-width: 576px) {
   .contacts_card {
     margin-bottom: 15px !important;
+  }
+
+  #alert {
+    right: 15%;
+    left: 15%;
   }
 }

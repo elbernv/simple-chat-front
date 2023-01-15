@@ -1,4 +1,4 @@
-axios.defaults.baseURL = 'http://localhost:7015';
+axios.defaults.baseURL = 'http://192.168.1.109:7015';
 axios.defaults.validateStatus = function (status) {
   return status >= 200 && status < 600;
 };
@@ -143,8 +143,8 @@ const signUp = async (event) => {
   window.location.href = '/index.html';
 };
 
-function enterKeyPress(event) {
+const enterKeyPress = (event) => {
   if (event.key === 'Enter') {
     document.getElementById('login-btn').click();
   }
-}
+};

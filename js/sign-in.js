@@ -1,4 +1,4 @@
-axios.defaults.baseURL = 'http://localhost:7015';
+axios.defaults.baseURL = 'http://192.168.1.109:7015';
 axios.defaults.validateStatus = function (status) {
   return status >= 200 && status < 600;
 };
@@ -61,7 +61,13 @@ async function login(event) {
 
   localStorage.setItem('access_token', response.data.access_token);
   localStorage.setItem('refresh_token', response.data.refresh_token);
+  if (response.data.type === 1) {
+    window.location.href = '/admin-panel.html';
+    return;
+  }
+
   window.location.href = '/index.html';
+  return;
 }
 
 function enterKeyPress(event) {
