@@ -100,9 +100,48 @@ html {
   background-color: rgba(0, 0, 0, 0.3);
 }
 .user_img {
+  cursor: pointer;
   height: 70px;
   width: 70px;
   border: 1.5px solid #f5f6fa;
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: 0.5s ease;
+  background-color: #00000052;
+  border-radius: 50%;
+}
+
+#current-user-image:hover .overlay {
+  opacity: 1;
+  cursor: pointer;
+}
+
+#current-user-image .text {
+  color: white;
+  font-size: 14px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.my-picture-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.my-picture-container img {
+  border-radius: 50%;
 }
 .user_img_msg {
   height: 40px;

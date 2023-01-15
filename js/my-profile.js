@@ -56,7 +56,7 @@ function showAlert(type, message) {
 }
 
 const getMyinfo = async (event = null) => {
-  const response = await axios.get('/me', {
+  const response = await axios.get('/me/customer', {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     },
