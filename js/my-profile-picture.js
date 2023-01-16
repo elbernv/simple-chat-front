@@ -22,13 +22,34 @@ const updatePicture = async (event) => {
   });
 
   if (response.status === 401) {
-    const refreshedSession = await refreshSession();
+    await refreshSession();
     updateMyProfile();
   }
 
   document.getElementById('my-picture').src = response.data.url;
   document.getElementById('user-image').src = response.data.url;
+
+  showAlert('success', 'Image updated', 'my-profile-picture-modal');
+
   return;
+};
+
+const deletePicture = async (event) => {
+  const response = await axios.delete('me/customer/picture', {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    },
+  });
+
+  if (response.status === 401) {
+    await refreshSession();
+    deletePicture();
+  }
+
+  document.getElementById('my-picture').src = response.data.url;
+  document.getElementById('user-image').src = response.data.url;
+
+  showAlert('success', 'Image deleted', 'my-profile-picture-modal');
 };
 
 const myProfilePictureMain = () => {

@@ -13,10 +13,10 @@ function closeAlert(alertId) {
   bsAlert.close();
 }
 
-function showAlert(type, message) {
+function showAlert(type, message, mainContainerId = 'my-profile-modal') {
   if (document.getElementById('alert')) return;
 
-  const mainContainer = document.getElementById('my-profile-modal');
+  const mainContainer = document.getElementById(mainContainerId);
 
   const newDiv = document.createElement('div');
 
