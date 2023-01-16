@@ -171,11 +171,12 @@
                   <img
                     src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
                     class="rounded-circle user_img"
+                    id="user-image"
                   />
                   <div
                     class="overlay"
                     data-bs-toggle="modal"
-                    onclick="getMyinfo(event)"
+                    onclick="loadMyinfo(event)"
                     data-bs-target="#my-profile-picture-modal"
                   >
                     <div class="text">Change Picture</div>
@@ -183,8 +184,8 @@
                   <span class="online_icon"></span>
                 </div>
                 <div class="user_info">
-                  <span>Khalid</span>
-                  <p>Kalid is online</p>
+                  <span id="user-name"></span>
+                  <p id="online-span-user"></p>
                 </div>
                 <i
                   class="fa-solid fa-gear dropdown-toggle"
@@ -198,7 +199,7 @@
                       class="dropdown-item"
                       data-bs-toggle="modal"
                       data-bs-target="#my-profile-modal"
-                      onclick="getMyinfo(event)"
+                      onclick="loadMyinfo(event)"
                     >
                       My Profile
                     </button>

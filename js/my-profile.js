@@ -55,25 +55,14 @@ function showAlert(type, message) {
   );
 }
 
-const getMyinfo = async (event = null) => {
-  const response = await axios.get('/me/customer', {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-    },
-  });
+const loadMyinfo = async (event = null) => {
+  const myInfo = await getMyInfo();
 
-  if (response.status === 401) {
-    const refreshedSession = await refreshSession();
-    getMyinfo();
-
-    return;
-  }
-
-  document.getElementById('first-name').value = response.data.name;
-  document.getElementById('last-name').value = response.data.lastName;
-  document.getElementById('email').value = response.data.session.email;
-  document.getElementById('password').value = response.data.session.password;
-  document.getElementById('my-picture').src = response.data.imgUrl;
+  document.getElementById('first-name').value = myInfo.name;
+  document.getElementById('last-name').value = myInfo.lastName;
+  document.getElementById('email').value = myInfo.session.email;
+  document.getElementById('password').value = myInfo.session.password;
+  document.getElementById('my-picture').src = myInfo.imgUrl;
 };
 
 const showFieldsWithErrors = (messages) => {
@@ -133,6 +122,11 @@ const updateMyProfile = async (event = null) => {
     const refreshedSession = await refreshSession();
     updateMyProfile();
   }
+
+  document.getElementById('user-name').innerText = response.data.name;
+  document.getElementById(
+    'online-span-user',
+  ).innerText = `${response.data.name} is online`;
 
   showAlert('success', 'Profile successfully updated');
 

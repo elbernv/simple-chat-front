@@ -67,11 +67,42 @@ const configureDropDownMenu = async () => {
   });
 };
 
+const getMyInfo = async () => {
+  const response = await axios.get('/me/customer', {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    },
+  });
+
+  if (response.status === 401) {
+    const refreshedSession = await refreshSession();
+    getMyInfo();
+
+    return;
+  }
+
+  return response.data;
+};
+
+const loadMyBasicInfo = async () => {
+  const myInfo = await getMyInfo();
+
+  document.getElementById('user-image').src = myInfo.imgUrl;
+  document.getElementById('user-name').innerText = myInfo.name;
+  document.getElementById(
+    'online-span-user',
+  ).innerText = `${myInfo.name} is online`;
+
+  return;
+};
+
 const main = async () => {
   await validateSession();
   const mainContainer = document.getElementById('main-container');
 
   mainContainer.addEventListener('click', configureDropDownMenu);
+
+  await loadMyBasicInfo();
 };
 
 main();

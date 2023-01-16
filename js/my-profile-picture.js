@@ -27,7 +27,7 @@ const updatePicture = async (event) => {
   }
 
   document.getElementById('my-picture').src = response.data.url;
-
+  document.getElementById('user-image').src = response.data.url;
   return;
 };
 
