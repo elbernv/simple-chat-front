@@ -133,13 +133,21 @@
                 alt=""
                 width="180"
                 height="180"
+                id="my-picture"
               />
             </div>
           </div>
           <div
             class="modal-footer d-flex alig-items-center justify-content-center"
           >
-            <button type="button" class="btn btn-success">Upload</button>
+            <button
+              type="button"
+              onclick="selectPicture(event)"
+              class="btn btn-success"
+            >
+              Upload
+            </button>
+            <input id="picture-input" type="file" style="display: none" />
             <button type="button" class="btn btn-danger">Delete</button>
             <button
               type="button"
@@ -167,6 +175,7 @@
                   <div
                     class="overlay"
                     data-bs-toggle="modal"
+                    onclick="getMyinfo(event)"
                     data-bs-target="#my-profile-picture-modal"
                   >
                     <div class="text">Change Picture</div>
@@ -442,5 +451,6 @@
     <script src="./js/axios.min.js"></script>
     <script src="./js/index.js"></script>
     <script src="./js/my-profile.js"></script>
+    <script src="./js/my-profile-picture.js"></script>
   </body>
 </html>

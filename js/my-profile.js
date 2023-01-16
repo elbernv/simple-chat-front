@@ -73,6 +73,7 @@ const getMyinfo = async (event = null) => {
   document.getElementById('last-name').value = response.data.lastName;
   document.getElementById('email').value = response.data.session.email;
   document.getElementById('password').value = response.data.session.password;
+  document.getElementById('my-picture').src = response.data.imgUrl;
 };
 
 const showFieldsWithErrors = (messages) => {
