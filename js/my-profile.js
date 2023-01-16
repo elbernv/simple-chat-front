@@ -61,7 +61,6 @@ const loadMyinfo = async (event = null) => {
   document.getElementById('first-name').value = myInfo.name;
   document.getElementById('last-name').value = myInfo.lastName;
   document.getElementById('email').value = myInfo.session.email;
-  document.getElementById('password').value = myInfo.session.password;
   document.getElementById('my-picture').src = myInfo.imgUrl;
 };
 
@@ -103,7 +102,7 @@ const updateMyProfile = async (event = null) => {
   const payload = {
     name: name.value,
     lastName: lastName.value,
-    password: password.value,
+    ...(password.value && { password: password.value }),
   };
 
   const response = await axios.patch('me/customer', payload, {
@@ -127,6 +126,7 @@ const updateMyProfile = async (event = null) => {
   document.getElementById(
     'online-span-user',
   ).innerText = `${response.data.name} is online`;
+  password.value = '';
 
   showAlert('success', 'Profile successfully updated');
 
