@@ -3,6 +3,8 @@ axios.defaults.validateStatus = function (status) {
   return status >= 200 && status < 600;
 };
 
+var activeUsers = [];
+
 const getUsers = async () => {
   const response = await axios.get('customers', {
     params: { limit: 100 },
@@ -27,7 +29,7 @@ const listUsers = async () => {
     const li = document.createElement('li');
     li.classList.add('user-list');
     li.innerHTML = `
-    <li id='user-${user.id}'>
+    <li id='user-${user.id}' onclick="openChat(${user.id})">
       <div class="d-flex bd-highlight">
         <div class="img_cont">
           <img
@@ -48,6 +50,7 @@ const listUsers = async () => {
 };
 
 const markActiveUsers = (activeUsersId) => {
+  activeUsers = activeUsersId;
   for (const id of activeUsersId) {
     const li = document.getElementById(`user-${id}`);
     const onlineIcon = li.getElementsByTagName('span')[0];
@@ -57,6 +60,14 @@ const markActiveUsers = (activeUsersId) => {
       'offline',
       'online',
     );
+
+    console.log(document.getElementById('chat-with-user-id'));
+
+    if (
+      id === parseInt(document.getElementById('chat-with-user-id').innerText)
+    ) {
+      document.getElementById('chat-with-status').classList.remove('offline');
+    }
   }
 };
 
@@ -69,6 +80,14 @@ const markUserAsOffline = (userId) => {
     'online',
     'offline',
   );
+
+  activeUsers = activeUsers.filter((id) => id !== parseInt(userId));
+
+  if (
+    userId === parseInt(document.getElementById('chat-with-user-id').innerText)
+  ) {
+    document.getElementById('chat-with-status').classList.add('offline');
+  }
 };
 
 const socket = io('http://192.168.1.109:7016', {

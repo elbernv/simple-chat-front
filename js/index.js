@@ -75,7 +75,7 @@ const getMyInfo = async () => {
   });
 
   if (response.status === 401) {
-    const refreshedSession = await refreshSession();
+    await refreshSession();
     getMyInfo();
 
     return;
