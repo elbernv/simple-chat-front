@@ -58,6 +58,7 @@ function showAlert(type, message, mainContainerId = 'my-profile-modal') {
 const loadMyinfo = async (event = null) => {
   const myInfo = await getMyInfo();
 
+  document.getElementById('password').value = '';
   document.getElementById('first-name').value = myInfo.name;
   document.getElementById('last-name').value = myInfo.lastName;
   document.getElementById('email').value = myInfo.session.email;
@@ -118,7 +119,7 @@ const updateMyProfile = async (event = null) => {
   }
 
   if (response.status === 401) {
-    const refreshedSession = await refreshSession();
+    await refreshSession();
     updateMyProfile();
   }
 

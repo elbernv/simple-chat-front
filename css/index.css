@@ -327,6 +327,14 @@ select:-webkit-autofill:focus {
   left: 40%;
 }
 
+.user-list {
+  cursor: pointer;
+}
+
+.user-list:hover {
+  background-color: #00000052;
+}
+
 @media (max-width: 576px) {
   .contacts_card {
     margin-bottom: 15px !important;
