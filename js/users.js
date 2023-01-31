@@ -1,4 +1,4 @@
-axios.defaults.baseURL = 'http://192.168.1.109:7015';
+axios.defaults.baseURL = 'http://192.168.1.105:7015';
 axios.defaults.validateStatus = function (status) {
   return status >= 200 && status < 600;
 };
@@ -61,8 +61,6 @@ const markActiveUsers = (activeUsersId) => {
       'online',
     );
 
-    console.log(document.getElementById('chat-with-user-id'));
-
     if (
       id === parseInt(document.getElementById('chat-with-user-id').innerText)
     ) {
@@ -90,7 +88,7 @@ const markUserAsOffline = (userId) => {
   }
 };
 
-const socket = io('http://192.168.1.109:7016', {
+var socket = io('http://192.168.1.105:7016', {
   query: { token: `${localStorage.getItem('access_token')}` },
 });
 

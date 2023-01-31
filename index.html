@@ -244,7 +244,7 @@
                 <span id="chat-with-user-id" style="display: none"></span>
                 <div class="img_cont">
                   <img
-                    src="http://0.0.0.0:7015/customers/picture/generic-user.jpg"
+                    src="http://192.168.1.105:7015/customers/picture/generic-user.jpg"
                     class="rounded-circle user_img"
                     id="image-chat-with"
                   />
@@ -283,12 +283,14 @@
                   ></span>
                 </div>
                 <textarea
-                  name=""
+                  id="message-text-area"
                   class="form-control type_msg"
                   placeholder="Type your message..."
                 ></textarea>
                 <div class="input-group-append">
-                  <span class="input-group-text send_btn"
+                  <span
+                    onclick="sendMessage(event)"
+                    class="input-group-text send_btn"
                     ><i class="fas fa-location-arrow"></i
                   ></span>
                 </div>
