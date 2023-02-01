@@ -212,6 +212,7 @@ html {
   background-color: #82ccdd;
   padding: 10px;
   position: relative;
+  min-width: 90px;
 }
 .msg_cotainer_send {
   margin-top: auto;
@@ -221,6 +222,7 @@ html {
   background-color: #78e08f;
   padding: 10px;
   position: relative;
+  min-width: 90px;
 }
 .msg_time {
   position: absolute;

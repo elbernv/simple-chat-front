@@ -68,9 +68,20 @@ const createSendMessageElement = (myInfo, message) => {
   `;
 
   messagesContainer.appendChild(divElement);
+
+  if (
+    messagesContainer.scrollHeight - messagesContainer.scrollTop >
+    messagesContainer.clientHeight
+  ) {
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
 };
 
 const createReceiveMessageElement = (userReceiverInfo, message) => {
+  if (userReceiverInfo.id === myInfo.id) {
+    return;
+  }
+
   const messagesContainer = document.getElementById('messages-container');
   const divElement = document.createElement('div');
   divElement.classList.add('d-flex', 'justify-content-end', 'mb-4');
@@ -89,11 +100,17 @@ const createReceiveMessageElement = (userReceiverInfo, message) => {
     `;
 
   messagesContainer.appendChild(divElement);
+
+  if (
+    messagesContainer.scrollHeight - messagesContainer.scrollTop === 404 ||
+    messagesContainer.scrollTop === 0
+  ) {
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
 };
 
 const openChat = async (userId) => {
   userReceiverInfo = await getUserReceiverInfo(userId);
-  myInfo = await getMyInfo();
   const messages = await getMessages(userId);
   const messagesContainer = document.getElementById('messages-container');
 
@@ -120,16 +137,39 @@ const openChat = async (userId) => {
 
     createReceiveMessageElement(userReceiverInfo, message);
   }
+
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
 };
 
 const sendMessage = async (event) => {
   const msgTextArea = document.getElementById('message-text-area');
-  socket.emit('send_message', {
-    message: msgTextArea.value,
-    senderId: myInfo.id,
-    receiverId: userReceiverInfo.id,
-    sentDate: new Date(),
-  });
+
+  if (userReceiverInfo) {
+    socket.emit('send_message', {
+      message: msgTextArea.value,
+      senderId: myInfo.id,
+      receiverId: userReceiverInfo.id,
+      sentDate: new Date(),
+    });
+  }
 
   createSendMessageElement(myInfo, { message: msgTextArea.value });
+
+  msgTextArea.value = '';
 };
+
+const chatEnterKeyPress = async (event) => {
+  if (event.key !== 'Enter') {
+    return;
+  }
+
+  event.preventDefault();
+
+  await sendMessage();
+};
+
+const chatMain = async () => {
+  myInfo = await getMyInfo();
+};
+
+chatMain();
