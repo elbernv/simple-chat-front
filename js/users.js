@@ -92,17 +92,11 @@ var socket = io(config.socketUrl, {
   query: { token: `${localStorage.getItem('access_token')}` },
 });
 
-socket.on('active-users', markActiveUsers);
-socket.on('mark-user-as-offline', markUserAsOffline);
-
 const usersMain = async () => {
   await listUsers();
 };
 
-document.addEventListener(
-  'DOMContentLoaded',
-  function () {
-    usersMain();
-  },
-  false,
-);
+socket.on('active-users', markActiveUsers);
+socket.on('mark-user-as-offline', markUserAsOffline);
+
+usersMain();
