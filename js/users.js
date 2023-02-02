@@ -99,4 +99,10 @@ const usersMain = async () => {
   await listUsers();
 };
 
-usersMain();
+document.addEventListener(
+  'DOMContentLoaded',
+  function () {
+    usersMain();
+  },
+  false,
+);
