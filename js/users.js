@@ -88,7 +88,7 @@ const markUserAsOffline = (userId) => {
   }
 };
 
-var socket = io('http://192.168.1.105:7016', {
+var socket = io(config.socketUrl, {
   query: { token: `${localStorage.getItem('access_token')}` },
 });
 
