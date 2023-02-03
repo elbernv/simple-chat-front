@@ -24,6 +24,7 @@ const getUsers = async () => {
 const listUsers = async (activeUsersId) => {
   const users = await getUsers();
   const uiElement = document.getElementById('contacts');
+  uiElement.innerHTML = '';
 
   for (const user of users.data) {
     const li = document.createElement('li');
