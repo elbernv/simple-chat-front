@@ -337,6 +337,11 @@ select:-webkit-autofill:focus {
   background-color: #00000052;
 }
 
+.spinner-messages-container,
+.spinner-users-container {
+  height: 100%;
+}
+
 @media (max-width: 576px) {
   .contacts_card {
     margin-bottom: 15px !important;

@@ -4,6 +4,27 @@ axios.defaults.validateStatus = function (status) {
 };
 
 var activeUsers = [];
+var users = [];
+
+const showUsersLoader = () => {
+  const contactsContainer = document.getElementById('contacts');
+  const divElement = document.createElement('div');
+
+  divElement.classList.add(
+    'spinner-users-container',
+    'd-flex',
+    'justify-content-center',
+    'align-items-center',
+  );
+
+  divElement.innerHTML = `
+    <div class="spinner-border text-light" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  `;
+
+  contactsContainer.appendChild(divElement);
+};
 
 const getUsers = async () => {
   const response = await axios.get('customers', {
@@ -15,18 +36,23 @@ const getUsers = async () => {
 
   if (response.status === 401) {
     await refreshSession();
-    getUsers();
+    await getUsers();
   }
 
   return response.data;
 };
 
 const listUsers = async (activeUsersId) => {
-  const users = await getUsers();
+  showUsersLoader();
+  users = await getUsers();
   const uiElement = document.getElementById('contacts');
   uiElement.innerHTML = '';
 
   for (const user of users.data) {
+    if (user.id === myInfo.id) {
+      continue;
+    }
+
     const li = document.createElement('li');
     li.classList.add('user-list');
     li.innerHTML = `
@@ -54,7 +80,12 @@ const listUsers = async (activeUsersId) => {
 
 const markActiveUsers = (activeUsersId) => {
   activeUsers = activeUsersId;
+
   for (const id of activeUsersId) {
+    if (id === myInfo.id) {
+      continue;
+    }
+
     const li = document.getElementById(`user-${id}`);
     const onlineIcon = li.getElementsByTagName('span')[0];
     const onlineDescription = li.getElementsByTagName('p')[0];

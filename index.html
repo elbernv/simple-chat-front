@@ -138,7 +138,7 @@
             </div>
           </div>
           <div
-            class="modal-footer d-flex alig-items-center justify-content-center"
+            class="modal-footer d-flex align-items-center justify-content-center"
           >
             <button
               type="button"
@@ -232,7 +232,15 @@
               </div>
             </div>
             <div class="card-body contacts_body">
-              <ui id="contacts" class="contacts"> </ui>
+              <ui id="contacts" class="contacts">
+                <div
+                  class="spinner-users-container d-flex justify-content-center align-items-center"
+                >
+                  <div class="spinner-border text-light" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </ui>
             </div>
             <div class="card-footer"></div>
           </div>

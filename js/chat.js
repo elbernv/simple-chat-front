@@ -12,21 +12,28 @@ socket.on('send_message', (data) => {
   }
 });
 
+const showMessagesLoader = () => {
+  const messagesContainer = document.getElementById('messages-container');
+  const divElement = document.createElement('div');
+
+  divElement.classList.add(
+    'spinner-messages-container',
+    'd-flex',
+    'justify-content-center',
+    'align-items-center',
+  );
+
+  divElement.innerHTML = `
+    <div class="spinner-border text-light" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  `;
+
+  messagesContainer.appendChild(divElement);
+};
+
 const getUserReceiverInfo = async (id) => {
-  const response = await axios.get(`customers/${id}`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-    },
-  });
-
-  if (response.status === 401) {
-    await refreshSession();
-    getUserReceiverInfo();
-
-    return;
-  }
-
-  return response.data;
+  return users.data.find((user) => user.id == id);
 };
 
 const getMessages = async (receiverId) => {
@@ -111,10 +118,10 @@ const createReceiveMessageElement = (userReceiverInfo, message) => {
 
 const openChat = async (userId) => {
   userReceiverInfo = await getUserReceiverInfo(userId);
-  const messages = await getMessages(userId);
   const messagesContainer = document.getElementById('messages-container');
 
   messagesContainer.innerHTML = ``;
+  showMessagesLoader();
 
   if (activeUsers.includes(userId)) {
     document.getElementById('chat-with-status').classList.remove('offline');
@@ -128,6 +135,9 @@ const openChat = async (userId) => {
     'chat-with',
   ).innerText = `Chat with ${userReceiverInfo.name}`;
   document.getElementById('image-chat-with').src = userReceiverInfo.imgUrl;
+
+  const messages = await getMessages(userId);
+  messagesContainer.innerHTML = ``;
 
   for (const message of messages) {
     if (message.type === 'sent') {
