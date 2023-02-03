@@ -21,7 +21,7 @@ const getUsers = async () => {
   return response.data;
 };
 
-const listUsers = async () => {
+const listUsers = async (activeUsersId) => {
   const users = await getUsers();
   const uiElement = document.getElementById('contacts');
 
@@ -47,6 +47,8 @@ const listUsers = async () => {
 
     uiElement.appendChild(li);
   }
+
+  markActiveUsers(activeUsersId);
 };
 
 const markActiveUsers = (activeUsersId) => {
@@ -92,11 +94,5 @@ var socket = io(config.socketUrl, {
   query: { token: `${localStorage.getItem('access_token')}` },
 });
 
-const usersMain = async () => {
-  await listUsers();
-};
-
-socket.on('active-users', markActiveUsers);
+socket.on('active-users', listUsers);
 socket.on('mark-user-as-offline', markUserAsOffline);
-
-usersMain();
